@@ -21,6 +21,7 @@ A program is a sequence of instructions. Each statement is either a declaration,
 
 ## How it's working ?
 - Download the content of the repository: [Lego](https://github.com/Tomasz1577/interpreter.git)
+- If you don't have Raku, you need to download it: [Raku:download](https://www.raku.org/downloads)
 - Then in the command line after entering the project folder:
 ```bash
 raku .\interpreterLego .\t\test.lego
