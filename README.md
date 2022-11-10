@@ -27,9 +27,17 @@ A program is a sequence of instructions. Each statement is either a declaration,
 
 
 - If you don't have Raku, you need to download it: [Raku:download](https://www.raku.org/downloads)
+
+![raku](https://user-images.githubusercontent.com/95379724/201209819-2c709cda-b6aa-4e5e-b549-0ca4b2986f16.jpg)
+
+
+
 - Then in the command line after entering the project folder:
 ```bash
 raku .\interpreterLego .\t\test.lego
 ```
+
+![testlego](https://user-images.githubusercontent.com/95379724/201210125-4dbb894a-8732-4245-bf31-26407cb31b05.jpg)
+
 
 - The 't' folder contains tests related to grammar development.
