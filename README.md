@@ -41,3 +41,6 @@ raku .\interpreterLego .\t\test.lego
 
 
 - The 't' folder contains tests related to grammar development.
+
+## Summary:
+The task was to create a 'simple' programming language interpreter (inspiration from other languages). It was an interesting challenge which allowed me to learn about many possibilities of Raku. Lego is the basic version of the interpreter that performs simple tasks. In the future, this project could be expanded with other functionalities.
