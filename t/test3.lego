@@ -1,0 +1,13 @@
+do x.;
+do y.;
+do z.;
+x = 1000.;
+y = 5.;
+
+
+z = 2 * y * x.;
+
+write(x).;
+write(y).;
+write(z).;
+

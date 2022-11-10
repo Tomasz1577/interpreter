@@ -1,0 +1,7 @@
+do x = 13.;
+write (x).;
+
+do y = "Hello World".;
+write (y).;
+
+

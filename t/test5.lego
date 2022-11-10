@@ -1,0 +1,4 @@
+print("Jestem Tomasz").;
+
+x = 10.;
+write(x).;

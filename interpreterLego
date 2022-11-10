@@ -1,0 +1,158 @@
+#!/usr/bin/env raku
+use v6.d;
+
+
+
+grammar Lego {
+    rule TOP {
+        <statement>* %% '.;'
+    }
+    rule statement {
+        | <declaration> | <ascription> | <displaying-function>
+    }
+    rule declaration {
+        'do' <var-name> [ '=' <phrase> ]?
+    }
+    rule ascription {
+        <var-name> '=' <phrase>
+    }
+    rule displaying-function {
+        <func-name> '('<var-name> ')'
+    }
+    token var-name {
+        \w*
+    }
+    token num {
+        <sign>? [| <int> | <float> | <int> <exp> | <float> <exp>]
+    }
+    rule val {
+        | <num> | <string> | <var-name> | '(' <phrase> ')'
+    }
+    token func-name {
+        'write'
+    }
+    token sign {
+        <[+-]>
+    }
+    token int {
+        \d+
+    }
+    token float {
+        \d* ['.' <int>]
+    }
+    token exp {
+        <sign>? <int>
+    }
+
+    rule phrase {
+        <priority>* %% <mo1>
+    }
+    rule priority{
+        <ratio>* %% <mo2>
+    }
+    rule ratio {
+        <val>* %% <mo3>
+    }
+    rule string {
+        '"' ( <-["]>* ) '"'
+    }
+    token mo1 {
+        '+' | '-'
+    }
+    token mo2 {
+        '*' | '/'
+    }
+    token mo3 {
+        '**'
+    }
+}
+
+class LegoAct{
+    has %!var;
+    method declaration($/) {
+        %!var{$<var-name>} = $<phrase> ?? $<phrase>.made !! 0;
+    }
+    method ascription($/) {
+        %!var{~$<var-name>} = $<phrase>.made;
+    }
+    method displaying-function($/) {
+        say %!var{$<var-name>}
+        if $<func-name> eq 'write';
+    }
+
+    multi sub oper('+', $a is rw, $b) {
+        $a += $b
+    }
+
+    multi oper('-', $a is rw, $b) {
+        $a -= $b
+    }
+    multi oper('/', $a is rw, $b) {
+        $a /= $b
+    }
+    multi oper('*', $a is rw, $b) {
+        $a *= $b
+    }
+    multi oper('**', $a is rw, $b) {
+        $a **= $b
+    }
+
+    method phrase($/) {
+        $/.make(finish($<priority>, $<mo1>));
+    }
+    method priority($/) {
+        $/.make(finish($<ratio>, $<mo2>));
+    }
+    method ratio($/) {
+        $/.make(finish($<val>, $<mo3>));
+    }
+
+    sub finish(@data, @ops) {
+        my @nums = @data.map: *.made;
+        my $result = @nums.shift;
+
+        oper(~@ops.shift, $result, @nums.shift)
+        while @nums;
+
+        return $result;
+    }
+
+    method num($/) {
+        $/.make(+$/);
+    }
+    method string($/) {
+        $/.make(~$/[0])
+    }
+
+    method val($/) {
+        if $<num> {
+            $/.make($<num>.made);
+        }
+        elsif $<var-name> {
+            $/.make(%!var{$<var-name>});
+        }
+        elsif $<string> {
+            $/.make($<string>.made);
+        }
+        else {
+            $/.make($<phrase>.made);
+        }
+    }
+}
+
+
+
+
+error('Usage: ./interpreterLego <filename>') unless @*ARGS.elems;
+
+my $filename = @*ARGS[0];
+error("Error: File $filename not found") unless $filename.IO.f;
+
+my $code = $filename.IO.slurp();
+my $result = Lego.parse($code, :actions(LegoAct.new));
+say $result ?? 'OK' !! error('Error: parse failed');
+
+sub error($message) {
+    note $message;
+    exit;
+}

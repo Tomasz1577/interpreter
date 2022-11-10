@@ -1,0 +1,11 @@
+do x.;
+do z.;
+do y.;
+
+x = 10.;
+z = 3.133.;
+y = -10.;
+
+write (x).;
+write (z).;
+write (y).;
