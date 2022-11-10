@@ -20,7 +20,7 @@ A program is a sequence of instructions. Each statement is either a declaration,
 
 
 ## How it's working ?
-- Download the content of the repository: [Lego](https://github.com/Tomasz1577/interpreter.git)
+- Copy the contents of the repository: [Lego](https://github.com/Tomasz1577/interpreter.git)
 
 
 ![image](https://user-images.githubusercontent.com/95379724/201209460-72a69476-5d62-429f-a474-288d7c2569da.jpg)
