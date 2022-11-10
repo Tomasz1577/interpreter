@@ -156,3 +156,8 @@ sub error($message) {
     note $message;
     exit;
 }
+
+
+#my $code = 'test.lego'.IO.slurp();
+#my $result = Lego.parse($code, :actions(LegoAct.new));
+#say $result
